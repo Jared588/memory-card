@@ -1,0 +1,24 @@
+.cards-container {
+    display: grid;
+    justify-items: center;
+    grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+    grid-gap: 50px;
+    max-width: 1280px;
+    padding: 1rem;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 225px;
+    min-height: 300px;
+    border: white solid 1px;
+}
+
+.card > img {
+    width: 200px;
+    height: auto;
+    padding: 1rem;
+}

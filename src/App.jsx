@@ -1,11 +1,11 @@
 import './App.css';
-import Cards from './Cards';
+import DisplayCards from './Cards';
 
 function App() {
   return (
     <>
       <h1 className='heading'>Pokemon!</h1>
-      <Cards />
+      <DisplayCards />
     </>
   );
 }

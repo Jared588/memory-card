@@ -7,6 +7,15 @@
     padding: 1rem;
 }
 
+@keyframes hoverAnimation {
+    0% {
+      transform: rotate(-1deg) 
+    }
+    100% {
+      transform: rotate(1deg) scale(1.05)
+    }
+  }
+
 .card {
     display: flex;
     flex-direction: column;
@@ -15,6 +24,13 @@
     width: 225px;
     min-height: 300px;
     border: white solid 1px;
+    background-image: radial-gradient(rgb(151, 151, 151) 0%, rgb(30, 45, 87) 100%);
+    cursor: pointer;
+}
+
+.card:hover{
+    animation: hoverAnimation 2s alternate infinite;
+    box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.7);
 }
 
 .card > img {

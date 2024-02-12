@@ -1,6 +1,7 @@
 import './Cards.css';
 import { useState, useEffect } from 'react';
 import Card from './containers/Card';
+import PropTypes from 'prop-types';
 
 // Set initial sequence/order of cards
 let randomArray = shuffleArray([...Array(8).keys()]); // Array between 0-7
@@ -50,25 +51,28 @@ function shuffleArray(array) {
 }
 
 // Display logic
-function DisplayCards() {
+function DisplayCards({ score, setScore }) {
   const [trackedList, setTrackedList] = useState([]);
   const data = GetPokemon();
 
   // Track pokemon
   function trackPokemon(name) {
-    if(!trackedList.includes(name)) {
+    if (!trackedList.includes(name)) { // Check if the pokemon has been previously selected
       setTrackedList((prevData) => {
-        return [...prevData, name]
-      })
-      if(trackedList.length === 7) { // Check for win condition
+        return [...prevData, name]; // Log pokemon
+      });
+      setScore((score += 1)); // Add to score
+      randomArray = shuffleArray(randomArray); // Refresh card order
+
+      // Check for win condition
+      if (trackedList.length === 7) {
         alert('you win!');
       }
-      randomArray = shuffleArray(randomArray); // Refresh card order
     } else {
       alert('you lose!');
       setTrackedList([]); // Reset list
+      setScore(0); // Reset score
     }
-    console.log(trackedList)
   }
 
   return (
@@ -76,12 +80,22 @@ function DisplayCards() {
       {data.length > 0 && (
         <div className="cards-container">
           {randomArray.map((index) => (
-            <Card key={index} id={index} data={data} handleClick={trackPokemon} />
+            <Card
+              key={index}
+              id={index}
+              data={data}
+              handleClick={trackPokemon}
+            />
           ))}
         </div>
       )}
     </>
   );
 }
+
+DisplayCards.propTypes = {
+  score: PropTypes.number,
+  setScore: PropTypes.func,
+};
 
 export default DisplayCards;

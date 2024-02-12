@@ -1,11 +1,16 @@
 import './App.css';
 import DisplayCards from './Cards';
+import { useState } from 'react';
 
 function App() {
+  const [score, setScore] = useState(0);
   return (
     <>
-      <h1 className='heading'>Pokemon!</h1>
-      <DisplayCards />
+      <div className="header">
+        <h1 className="heading">Pokemon!</h1>
+        <div className="scoreboard">{score}</div>
+      </div>
+      <DisplayCards score={score} setScore={setScore} />
     </>
   );
 }

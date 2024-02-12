@@ -2,6 +2,10 @@ import './Cards.css';
 import { useState, useEffect } from 'react';
 import Card from './containers/Card';
 
+// Set initial sequence/order of cards
+let randomArray = shuffleArray([...Array(8).keys()]); // Array between 0-7
+
+// Fetches pokemon data
 function GetPokemon() {
   const [pokemonData, setPokemonData] = useState([]);
 
@@ -45,17 +49,34 @@ function shuffleArray(array) {
   return array;
 }
 
-
+// Display logic
 function DisplayCards() {
+  const [trackedList, setTrackedList] = useState([]);
   const data = GetPokemon();
-  const randomArray = shuffleArray([...Array(8).keys()]); // Array between 0-7
+
+  // Track pokemon
+  function trackPokemon(name) {
+    if(!trackedList.includes(name)) {
+      setTrackedList((prevData) => {
+        return [...prevData, name]
+      })
+      if(trackedList.length === 7) { // Check for win condition
+        alert('you win!');
+      }
+      randomArray = shuffleArray(randomArray); // Refresh card order
+    } else {
+      alert('you lose!');
+      setTrackedList([]); // Reset list
+    }
+    console.log(trackedList)
+  }
 
   return (
     <>
       {data.length > 0 && (
         <div className="cards-container">
           {randomArray.map((index) => (
-            <Card key={index} id={index} data={data} />
+            <Card key={index} id={index} data={data} handleClick={trackPokemon} />
           ))}
         </div>
       )}

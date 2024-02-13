@@ -8,7 +8,7 @@ function App() {
     <>
       <div className="header">
         <h1 className="heading">Pokemon!</h1>
-        <div className="scoreboard">{score}</div>
+        <div className="scoreboard">Score: {score}</div>
       </div>
       <DisplayCards score={score} setScore={setScore} />
     </>

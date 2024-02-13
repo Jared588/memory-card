@@ -5,5 +5,9 @@
 }
 
 .heading {
-  padding: 2rem;
+  margin: 2rem;
+}
+
+.scoreboard {
+  margin: 0.5rem;
 }

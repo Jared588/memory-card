@@ -4,7 +4,7 @@ import Card from './containers/Card';
 import PropTypes from 'prop-types';
 
 // Display logic
-function DisplayCards({ score, setScore }) {
+function DisplayCards({ score, setScore, highscore, setHighscore }) {
   const [pokemonData, setPokemonData] = useState([]);
   const [trackedList, setTrackedList] = useState([]);
   const [flip, setFlip] = useState(false);
@@ -57,6 +57,10 @@ function DisplayCards({ score, setScore }) {
       if (trackedList.length === cardAmount - 1) {
         alert('you win!');
       }
+      // Update highscore if necessary
+      if (score > highscore) {
+        setHighscore(score);
+      }
     } else {
       alert('you lose!');
       setTrackedList([]); // Reset list
@@ -98,6 +102,8 @@ function shuffleArray(array) {
 DisplayCards.propTypes = {
   score: PropTypes.number,
   setScore: PropTypes.func,
+  highscore: PropTypes.number,
+  setHighscore: PropTypes.func,
 };
 
 export default DisplayCards;

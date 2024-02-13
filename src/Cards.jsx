@@ -3,9 +3,6 @@ import { useState, useEffect } from 'react';
 import Card from './containers/Card';
 import PropTypes from 'prop-types';
 
-// Set initial sequence/order of cards
-let randomArray = shuffleArray([...Array(8).keys()]); // Array between 0-7
-
 // Fetches pokemon data
 function GetPokemon() {
   const [pokemonData, setPokemonData] = useState([]);
@@ -54,11 +51,14 @@ function shuffleArray(array) {
 function DisplayCards({ score, setScore }) {
   const [trackedList, setTrackedList] = useState([]);
   const [flip, setFlip] = useState(false);
-  const data = GetPokemon();
+
+  let randomArray = shuffleArray([...Array(8).keys()]); // Set inital array between 0-7
+  const data = GetPokemon(); // Get pokemon data
 
   // Track pokemon
   function trackPokemon(name) {
-    if (!trackedList.includes(name)) { // Check if the pokemon has been previously selected
+    if (!trackedList.includes(name)) {
+      // Check if the pokemon has been previously selected
       setTrackedList((prevData) => {
         return [...prevData, name]; // Log pokemon
       });
@@ -67,7 +67,7 @@ function DisplayCards({ score, setScore }) {
       setFlip(true); // Start flip animation
       setTimeout(() => {
         setFlip(false);
-      }, 1000) // Wait for animation to finish before changing state
+      }, 1000); // Wait for animation to finish before changing state
 
       // Check for win condition
       if (trackedList.length === 7) {
@@ -83,7 +83,7 @@ function DisplayCards({ score, setScore }) {
   return (
     <>
       {data.length > 0 && (
-        <div className='cards-container'>
+        <div className="cards-container">
           {randomArray.map((index) => (
             <Card
               key={index}

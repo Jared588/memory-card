@@ -4,7 +4,14 @@ import Card from './containers/Card';
 import PropTypes from 'prop-types';
 
 // Display logic
-function DisplayCards({ score, setScore, highscore, setHighscore }) {
+function DisplayCards({
+  score,
+  setScore,
+  highscore,
+  setHighscore,
+  setOutcome,
+  setModalDisplay,
+}) {
   const [pokemonData, setPokemonData] = useState([]);
   const [trackedList, setTrackedList] = useState([]);
   const [flip, setFlip] = useState(false);
@@ -53,16 +60,21 @@ function DisplayCards({ score, setScore, highscore, setHighscore }) {
         setFlip(false);
       }, 1000); // Wait for animation to finish before changing state
 
-      // Check for win condition
-      if (trackedList.length === cardAmount - 1) {
-        alert('you win!');
-      }
       // Update highscore if necessary
       if (score > highscore) {
         setHighscore(score);
       }
+
+      // Check for win condition
+      if (trackedList.length === cardAmount - 1) {
+        setOutcome('WIN');
+        setModalDisplay(true);
+        setTrackedList([]); // Reset list
+        setScore(0); // Reset score
+      }
     } else {
-      alert('you lose!');
+      setOutcome('LOSE');
+      setModalDisplay(true);
       setTrackedList([]); // Reset list
       setScore(0); // Reset score
     }
@@ -104,6 +116,8 @@ DisplayCards.propTypes = {
   setScore: PropTypes.func,
   highscore: PropTypes.number,
   setHighscore: PropTypes.func,
+  setOutcome: PropTypes.func,
+  setModalDisplay: PropTypes.func,
 };
 
 export default DisplayCards;

@@ -8,12 +8,14 @@ function DisplayCards({ score, setScore }) {
   const [pokemonData, setPokemonData] = useState([]);
   const [trackedList, setTrackedList] = useState([]);
   const [flip, setFlip] = useState(false);
+  const cardAmount = 8;
 
   // Fetches pokemon data
   function GetPokemon() {
     useEffect(() => {
-      const fetchPokemon = (id) => {
-        fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`)
+      // Fetch 'x' amount
+      for (let i = 1; i <= cardAmount; i++) {
+        fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
           .then((response) => {
             if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -24,18 +26,13 @@ function DisplayCards({ score, setScore }) {
             setPokemonData((prevData) => {
               // Replace the existing data with the new data (prevents duplicates)
               const newData = [...prevData];
-              newData[id - 1] = data;
+              newData[i - 1] = data;
               return newData;
             });
           })
           .catch((error) => {
             console.error('Error fetching Pokemon data:', error);
           });
-      };
-
-      // Fetch 8 pokemon
-      for (let i = 1; i <= 8; i++) {
-        fetchPokemon(i);
       }
     }, []);
 
@@ -57,7 +54,7 @@ function DisplayCards({ score, setScore }) {
       }, 1000); // Wait for animation to finish before changing state
 
       // Check for win condition
-      if (trackedList.length === 7) {
+      if (trackedList.length === cardAmount - 1) {
         alert('you win!');
       }
     } else {
@@ -67,7 +64,7 @@ function DisplayCards({ score, setScore }) {
     }
   }
 
-  let randomArray = shuffleArray([...Array(8).keys()]); // Set inital array between 0-7
+  let randomArray = shuffleArray([...Array(cardAmount).keys()]); // Set inital array between 0-7
   const data = GetPokemon(); // Get pokemon data
 
   return (

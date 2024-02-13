@@ -53,6 +53,7 @@ function shuffleArray(array) {
 // Display logic
 function DisplayCards({ score, setScore }) {
   const [trackedList, setTrackedList] = useState([]);
+  const [flip, setFlip] = useState(false);
   const data = GetPokemon();
 
   // Track pokemon
@@ -63,6 +64,10 @@ function DisplayCards({ score, setScore }) {
       });
       setScore((score += 1)); // Add to score
       randomArray = shuffleArray(randomArray); // Refresh card order
+      setFlip(true); // Start flip animation
+      setTimeout(() => {
+        setFlip(false);
+      }, 1000) // Wait for animation to finish before changing state
 
       // Check for win condition
       if (trackedList.length === 7) {
@@ -78,13 +83,14 @@ function DisplayCards({ score, setScore }) {
   return (
     <>
       {data.length > 0 && (
-        <div className="cards-container">
+        <div className='cards-container'>
           {randomArray.map((index) => (
             <Card
               key={index}
               id={index}
               data={data}
               handleClick={trackPokemon}
+              flipStatus={flip}
             />
           ))}
         </div>

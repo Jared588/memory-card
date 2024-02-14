@@ -16,32 +16,28 @@ function DisplayCards({
   const [pokemonData, setPokemonData] = useState([]);
   const [trackedList, setTrackedList] = useState([]);
   const [flip, setFlip] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // Fetches pokemon data
   function GetPokemon() {
     useEffect(() => {
-      // Fetch 'x' amount
-      for (let i = 1; i <= 30; i++) {
-        // 30 being the max
-        fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            return response.json();
-          })
-          .then((data) => {
-            setPokemonData((prevData) => {
-              // Replace the existing data with the new data (prevents duplicates)
-              const newData = [...prevData];
-              newData[i - 1] = data;
-              return newData;
-            });
-          })
-          .catch((error) => {
-            console.error('Error fetching Pokemon data:', error);
-          });
+      async function fetchData() {
+        try {
+          const responses = await Promise.all(
+            Array.from({ length: 30 }, (_, i) =>
+              fetch(`https://pokeapi.co/api/v2/pokemon/${i + 1}/`)
+            )
+          );
+          const pokemons = await Promise.all(
+            responses.map((response) => response.json())
+          );
+          setPokemonData(pokemons);
+          setLoading(false);
+        } catch (error) {
+          console.error('Error fetching Pokemon data:', error);
+        }
       }
+      fetchData();
     }, []);
 
     return pokemonData;
@@ -83,6 +79,10 @@ function DisplayCards({
 
   let randomArray = shuffleArray([...Array(cardAmount).keys()]); // Set inital array between 0-7
   const data = GetPokemon(); // Get pokemon data
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>

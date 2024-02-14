@@ -11,7 +11,7 @@ function DisplayCards({
   setHighscore,
   setOutcome,
   setModalDisplay,
-  cardAmount
+  cardAmount,
 }) {
   const [pokemonData, setPokemonData] = useState([]);
   const [trackedList, setTrackedList] = useState([]);
@@ -21,7 +21,8 @@ function DisplayCards({
   function GetPokemon() {
     useEffect(() => {
       // Fetch 'x' amount
-      for (let i = 1; i <= 30; i++) { // 30 being the max
+      for (let i = 1; i <= 30; i++) {
+        // 30 being the max
         fetch(`https://pokeapi.co/api/v2/pokemon/${i}/`)
           .then((response) => {
             if (!response.ok) {
@@ -118,7 +119,7 @@ DisplayCards.propTypes = {
   setHighscore: PropTypes.func,
   setOutcome: PropTypes.func,
   setModalDisplay: PropTypes.func,
-  cardAmount: PropTypes.number
+  cardAmount: PropTypes.number,
 };
 
 export default DisplayCards;

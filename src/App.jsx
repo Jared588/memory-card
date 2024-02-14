@@ -23,7 +23,7 @@ function App() {
   return (
     <>
       <div className="header">
-        <h1>Pokemon!</h1>
+        <h1>Pokémon!</h1>
         <div className='scoreboard'>
           <p>Highscore: {highscore}</p>
           <p>Score: {score}</p>

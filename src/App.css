@@ -25,3 +25,12 @@
   display: flex;
   justify-content: center;
 }
+
+@media (max-width: 520px) {
+  .header {
+    justify-content: center;
+  }
+  .header > h1 {
+    margin-bottom: 0rem;
+  }
+}

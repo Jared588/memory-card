@@ -4,13 +4,24 @@
   text-align: center;
 }
 
-.header > h1 {
-  text-align: left;
-  margin-top: 2rem;
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 1rem;
   margin-bottom: 0rem;
 }
 
-.header > p {
+.scoreboard {
   margin: 0.5rem;
   text-align: right;
+}
+
+.header > p:nth-child(4) {
+  text-align: center;
+}
+
+.card-input {
+  display: flex;
+  justify-content: center;
 }
